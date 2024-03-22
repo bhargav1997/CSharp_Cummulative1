@@ -13,10 +13,10 @@ namespace Cumulative_Project.Controllers
         }
 
         // GET : /Teacher/List
-        public ActionResult List()
+        public ActionResult List(string SearchKey = null)
         {
             TeacherDataController controller = new TeacherDataController();
-            IEnumerable<Teacher> teachers = controller.ListTeachers();
+            IEnumerable<Teacher> teachers = controller.ListTeachers(SearchKey);
             return View(teachers);
         }
 

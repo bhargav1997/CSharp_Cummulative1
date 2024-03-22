@@ -40,7 +40,7 @@ namespace Cumulative_Project.Models
         public MySqlConnection AccessDatabase()
         {
             //We are instantiating the MySqlConnection Class to create an object
-            //the object is a specific connection to our school database on port 8888 of localhost
+            //the object is a specific connection to our school database on port 8889 of localhost
             return new MySqlConnection(ConnectionString);
         }
     }
