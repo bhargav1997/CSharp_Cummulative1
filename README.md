@@ -4,7 +4,7 @@
 ![Home Page](./home.png)
 
 # Teachers Page
-![Teacher Page](./Teacher.png)
+![Teacher Page](./Teacher2.png)
 
 When the user, clicks on teacher's id, it will navigate to the Teachers More info. Page, in which, teacher have which subjects all listed there.
 
