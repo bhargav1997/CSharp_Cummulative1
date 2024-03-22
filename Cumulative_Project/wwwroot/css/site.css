@@ -1,5 +1,5 @@
 ﻿html {
-  font-size: 14px;
+    font-size: 14px;
 }
 
 /* Table */
@@ -33,22 +33,22 @@ tr:hover {
 }
 
 @media (min-width: 768px) {
-  html {
-    font-size: 16px;
-  }
+    html {
+        font-size: 16px;
+    }
 }
 
 .btn:focus, .btn:active:focus, .btn-link.nav-link:focus, .form-control:focus, .form-check-input:focus {
-  box-shadow: 0 0 0 0.1rem white, 0 0 0 0.25rem #258cfb;
+    box-shadow: 0 0 0 0.1rem white, 0 0 0 0.25rem #258cfb;
 }
 
 html {
-  position: relative;
-  min-height: 100%;
+    position: relative;
+    min-height: 100%;
 }
 
 body {
-  margin-bottom: 60px;
+    margin-bottom: 60px;
 }
 
 p {
@@ -68,4 +68,66 @@ a {
     /* Hover effect for anchor tag */
     a:hover {
         color: #0056b3; /* Darker blue on hover */
+    }
+
+/* Form Container */
+#teacherSearchForm {
+    margin: 15px auto;
+    padding: 20px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+}
+
+    /* Form Label */
+    #teacherSearchForm label {
+        display: inline-block;
+        width: 100px; /* Adjust width as needed */
+        text-align: right;
+        margin-right: 10px;
+    }
+
+    /* Form Input */
+    #teacherSearchForm input[type="text"],
+    #teacherSearchForm input[type="date"],
+    #teacherSearchForm input[type="number"] {
+        width: 200px; /* Adjust width as needed */
+        padding: 8px;
+        margin-bottom: 10px;
+        border: 1px solid #ccc;
+        border-radius: 4px;
+    }
+
+#searchkey {
+    width: 20%; /* Subtract padding */
+    padding: 8px;
+    margin-bottom: 10px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+}
+
+#submitBtn {
+    width: 10%;
+    padding: 10px;
+    background-color: #007bff; /* Blue color */
+    color: #fff;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+
+/* Search Button */
+#teacherSearchForm button[type="submit"] {
+    padding: 10px 20px;
+    background-color: #007bff; /* Blue color */
+    color: #fff;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+
+    /* Hover Effect for Search Button */
+    #teacherSearchForm button[type="submit"]:hover {
+        background-color: #0056b3; /* Darker blue color on hover */
     }
