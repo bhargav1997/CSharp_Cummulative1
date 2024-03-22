@@ -14,12 +14,12 @@ namespace Cumulative_Project.Controllers
         /// <summary>
         /// Returns a list of Teachers in the system
         /// </summary>
-        /// <example>GET Teacher/ListTeachers</example>
+        /// <example>GET Teacher/ListTeachers/1</example>
         /// <returns>
         /// A list of Teachers
         /// </returns>
         [HttpGet]
-        [Route("api/Teacher/ListTeachers/{SearchKey?}")]
+        [Route("api/TeacherData/ListTeachers/{SearchKey?}")]
         public IEnumerable<Teacher> ListTeachers(string SearchKey = null)
         {
             //Create an instance of a connection
@@ -82,9 +82,9 @@ namespace Cumulative_Project.Controllers
         /// <param name="id">The teacher primary key</param>
         /// <returns>An teacher object</returns>
         [HttpGet]
-        public Teacher FindTeacher(int id)
+        public IEnumerable<TeacherLecturesClass> FindTeacher(int id)
         {
-            Teacher newTeacher = new Teacher();
+            List<TeacherLecturesClass> teachersLecturesList = new List<TeacherLecturesClass> { };
 
             //Create an instance of a connection
             MySqlConnection Conn = school.AccessDatabase();
@@ -96,24 +96,31 @@ namespace Cumulative_Project.Controllers
             MySqlCommand cmd = Conn.CreateCommand();
 
             //SQL QUERY
-            cmd.CommandText = "Select t.teacherid, t.teacherfname, t.teacherlname, t.employeenumber, t.salary, cls.classcode, cls.startdate,  cls.finishdate, cls.classname from teachers AS t JOIN classes AS cls ON t.teacherid = cls.teacherid WHERE t.teacherid = " + id;
+            cmd.CommandText = "Select t.teacherid, t.teacherfname, t.hiredate, t.teacherlname, t.employeenumber, t.salary, cls.classcode, cls.startdate,  cls.finishdate, cls.classname from teachers AS t JOIN classes AS cls ON t.teacherid = cls.teacherid WHERE t.teacherid = " + id;
 
             //Gather Result Set of Query into a variable
             MySqlDataReader ResultSet = cmd.ExecuteReader();
 
             while (ResultSet.Read())
             {
+                TeacherLecturesClass teacherLectures = new TeacherLecturesClass();
                 //Access Column information by the DB column name as an index
-                newTeacher.teacherId = (int)ResultSet["teacherid"];
-                newTeacher.teacherFname = ResultSet["teacherfname"].ToString();
-                newTeacher.teacherLname = ResultSet["teacherlname"].ToString();
-                newTeacher.teacherEmployeeNumber = ResultSet["employeenumber"].ToString();
-                newTeacher.teacherHireDate = ResultSet["hiredate"].ToString();
-                newTeacher.salary = (decimal)ResultSet["salary"];
+                teacherLectures.teacherId = (int)ResultSet["teacherid"];
+                teacherLectures.teacherFname = ResultSet["teacherfname"].ToString();
+                teacherLectures.teacherLname = ResultSet["teacherlname"].ToString();
+                teacherLectures.teacherEmployeeNumber = ResultSet["employeenumber"].ToString();
+                teacherLectures.hiredate = ResultSet["hiredate"].ToString();
+                teacherLectures.salary = (decimal)ResultSet["salary"];
+                teacherLectures.classcode = ResultSet["classcode"].ToString();
+                teacherLectures.startdate = ResultSet["startdate"].ToString();
+                teacherLectures.finishdate = ResultSet["finishdate"].ToString();
+                teacherLectures.classname = ResultSet["classname"].ToString();
+
+                teachersLecturesList.Add(teacherLectures);
             }
 
 
-            return newTeacher;
+            return teachersLecturesList;
         }
     }
 }

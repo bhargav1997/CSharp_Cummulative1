@@ -1,0 +1,34 @@
+﻿body {
+    margin: 0;
+    padding-top: 50px;
+    padding-bottom: 20px;
+}
+/* Table */
+table {
+    width: 100%;
+    border-collapse: collapse;
+    border: 1px solid #ddd;
+}
+
+/* Table Header */
+th {
+    background-color: #f2f2f2;
+    padding: 8px;
+    text-align: left;
+}
+
+/* Table Row */
+tr:nth-child(even) {
+    background-color: #f2f2f2;
+}
+
+/* Table Cell */
+td {
+    padding: 8px;
+    border-bottom: 1px solid #ddd;
+}
+
+/* Hover Effect */
+tr:hover {
+    background-color: #ddd;
+}

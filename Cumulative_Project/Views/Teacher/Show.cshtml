@@ -1,11 +1,42 @@
-﻿@model Cumulative_Project.Models.Teacher
+﻿@model IEnumerable<Cumulative_Project.Models.TeacherLecturesClass>
+
 @{
     ViewBag.Title = "Show";
 }
 
 <a class="navlink" href="/Teacher/List">Back To Teachers</a>
+
 <div id="containershow">
-    <h2>@Model.teacherFname @Model.teacherLname</h2>
-    <p>Hire  date: @Model.teacherHireDate</p>
-    <p>Salary  date: @Model.salary</p>
+    <table>
+        <thead>
+            <tr>
+                <th>Teacher Name</th>
+                <th>Teacher ID</th>
+                <th>Employee Number</th>
+                <th>Salary</th>
+                <th>ClassName</th>
+                <th>Class Code</th>
+                <th>Hire Date</th>
+                <th>Start Date</th>
+                <th>Finish Date</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var teacher in Model)
+            {
+                <tr>
+                    <td>@teacher.teacherFname @teacher.teacherLname</td>
+                    <td>@teacher.teacherId</td>
+                    <td>@teacher.teacherEmployeeNumber</td>
+                    <td>@teacher.salary</td>
+                    <td>@teacher.classname</td>
+                    <td>@teacher.classcode</td>
+                    <td>@teacher.hiredate</td>
+                    <td>@teacher.startdate</td>
+                    <td>@teacher.finishdate</td>
+                </tr>
+            }
+        </tbody>
+     </table>
 </div>
+

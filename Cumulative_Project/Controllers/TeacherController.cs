@@ -24,9 +24,9 @@ namespace Cumulative_Project.Controllers
         public ActionResult Show(int id)
         {
             TeacherDataController controller = new TeacherDataController();
-            Teacher teacher = controller.FindTeacher(id);
+            IEnumerable<TeacherLecturesClass> teacherLectureClassess = controller.FindTeacher(id);
 
-            return View(teacher);
+            return View(teacherLectureClassess);
         }
     }
 }

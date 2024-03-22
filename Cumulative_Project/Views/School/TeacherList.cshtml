@@ -3,12 +3,12 @@
     ViewBag.Title = "Teacher Lists";
 }
 
-
-<a class="navlink" href="/">Back To School</a>
+<h2>List</h2>
+<p>This page should be showing information about all teachers</p>
 
 <div id="containerlist">
-    <h2>Find Teacher (By, First name / Last name)</h2>
-    <form action="/Teacher/List" method="GET">
+    <h2>List of Teachers</h2>
+    <form action="/School/TeacherList" method="GET">
         <input type="text" name="SearchKey" autocomplete="off" />
         <input type="submit" value="Search" />
     </form>
@@ -20,7 +20,7 @@
                 <th>Teacher Name</th>
                 <th>Teacher Employee Number</th>
                 <th>Hire Date</th>
-                <th>Salary</th>
+                <th>Salary</th> 
             </tr>
         </thead>
         <tbody>
