@@ -78,10 +78,9 @@ namespace Cumulative_Project.Controllers
         /// <param name="id">The classId primary key</param>
         /// <returns>An class object</returns>
         [HttpGet]
-        public IEnumerable<Class> FindClass(int id)
+        public Class FindClass(int id)
         {
-            List<Class> classList = new List<Class> { };
-
+            Class classData = new Class();
             //Create an instance of a connection
             MySqlConnection Conn = school.AccessDatabase();
 
@@ -92,14 +91,13 @@ namespace Cumulative_Project.Controllers
             MySqlCommand cmd = Conn.CreateCommand();
 
             //SQL QUERY
-            cmd.CommandText = "Select * from classes where classid = " + id;
+               cmd.CommandText = "Select * from classes where classid = " + id;
 
             //Gather Result Set of Query into a variable
             MySqlDataReader ResultSet = cmd.ExecuteReader();
 
             while (ResultSet.Read())
             {
-                Class classData = new Class();
 
                 int ClassId = (int)ResultSet["classid"];
                 string ClassCode = ResultSet["classcode"].ToString();
@@ -117,9 +115,7 @@ namespace Cumulative_Project.Controllers
                 classData.finishdate = FinishDate;
                 classData.classname = ClassName;
             }
-
-
-            return classList;
+            return classData;
         }
     }
 }

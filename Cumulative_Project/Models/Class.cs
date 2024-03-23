@@ -8,7 +8,6 @@ namespace Cumulative_Project.Models
 		public int teacherid;
 		public string startdate;
 		public string finishdate;
-        public string classname;
-    }
+		public string classname;
+	}
 }
-
