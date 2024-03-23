@@ -71,6 +71,56 @@ namespace Cumulative_Project.Controllers
             //Return the final list of author names
             return classes;
         }
+
+        /// <summary>
+        /// Finds an class in the system given an Class ID
+        /// </summary>
+        /// <param name="id">The classId primary key</param>
+        /// <returns>An class object</returns>
+        [HttpGet]
+        public IEnumerable<Class> FindClass(int id)
+        {
+            List<Class> classList = new List<Class> { };
+
+            //Create an instance of a connection
+            MySqlConnection Conn = school.AccessDatabase();
+
+            //Open the connection between the web server and database
+            Conn.Open();
+
+            //Establish a new command (query) for our database
+            MySqlCommand cmd = Conn.CreateCommand();
+
+            //SQL QUERY
+            cmd.CommandText = "Select * from classes where classid = " + id;
+
+            //Gather Result Set of Query into a variable
+            MySqlDataReader ResultSet = cmd.ExecuteReader();
+
+            while (ResultSet.Read())
+            {
+                Class classData = new Class();
+
+                int ClassId = (int)ResultSet["classid"];
+                string ClassCode = ResultSet["classcode"].ToString();
+                int TeacherId = (int)ResultSet["teacherid"];
+                string StartDate = ResultSet["startdate"].ToString();
+                string FinishDate = ResultSet["finishdate"].ToString();
+                string ClassName = ResultSet["classname"].ToString();
+
+
+                classData.classid = ClassId;
+
+                classData.classcode = ClassCode;
+                classData.teacherid = TeacherId;
+                classData.startdate = StartDate;
+                classData.finishdate = FinishDate;
+                classData.classname = ClassName;
+            }
+
+
+            return classList;
+        }
     }
 }
 
