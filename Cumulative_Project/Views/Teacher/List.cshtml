@@ -10,7 +10,7 @@
     <!--Just For THe Showcase, It's not implemented yet.'-->
     <form action="/Teacher/List" method="GET" id="teacherSearchForm">
         <label for="name">Search by Name:</label>
-        <input type="text" id="name" name="name" placeholder="Enter teacher's name">
+        <input type="text" id="teacherName" name="name" placeholder="Enter teacher's name">
 
         <label for="hireDate">Hire Date:</label>
         <input type="date" id="hireDate" name="hireDate">
@@ -24,7 +24,7 @@
 
     <h2>Find Teacher (By, First name / Last name)</h2>
     <form action="/Teacher/List" method="GET">
-        <input type="text" name="SearchKey" autocomplete="off" id="searchkey" placeholder="Enter teacher's name" />
+        <input type="text" name="name" autocomplete="off" id="name" placeholder="Enter teacher's name" />
         <input type="submit" value="Search" id="submitBtn" />
     </form>
     <h2>List of Classess</h2>
