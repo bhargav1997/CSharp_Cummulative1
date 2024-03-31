@@ -129,6 +129,85 @@ a:hover {
     background-color: #0056b3; /* Darker blue color on hover */
 }
 
+.button {
+    display: inline-block;
+    padding: 10px 20px;
+    background-color: #4CAF50; /* Green */
+    color: white;
+    text-align: center;
+    text-decoration: none;
+    font-size: 16px;
+    border-radius: 5px;
+    border: none;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+    margin: 1rem 0;
+}
+
+.button:hover {
+    color: white;
+    background-color: #45a049; /* Darker Green */
+}
+
+#containershow {
+    width: 50%;
+    margin: 0 auto;
+}
+
+nav {
+    margin-bottom: 20px;
+}
+
+.navlink {
+    text-decoration: none;
+    color: #333;
+    font-weight: bold;
+}
+
+h2 {
+    color: #333;
+    margin-bottom: 20px;
+}
+
+form {
+    background-color: #f9f9f9;
+    padding: 20px;
+    border-radius: 10px;
+}
+
+.inputrow {
+    margin-bottom: 15px;
+}
+
+label {
+    display: block;
+    margin-bottom: 5px;
+    color: #333;
+}
+
+input[type="text"],
+input[type="date"] {
+    width: 100%;
+    padding: 10px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    box-sizing: border-box;
+}
+
+input[type="submit"] {
+    background-color: #4CAF50;
+    color: white;
+    padding: 10px 20px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+
+input[type="submit"]:hover {
+    background-color: #45a049;
+}
+
 @media (min-width: 768px) {
     html {
         font-size: 16px;

@@ -1,11 +1,14 @@
-﻿using System;
+﻿using System.Diagnostics;
 using System.Web.Http;
 using Cumulative_Project.Models;
 using MySql.Data.MySqlClient;
+using System.Web.Http.Cors;
+using static Mysqlx.Expect.Open.Types.Condition.Types;
+using System.Reflection.Metadata;
 
 namespace Cumulative_Project.Controllers
 {
-	public class TeacherDataController : ApiController
+    public class TeacherDataController : ApiController
     {
         // The database context class which allows us to access our MySQL Database.
         private SchoolDbContext school = new SchoolDbContext();
@@ -19,8 +22,8 @@ namespace Cumulative_Project.Controllers
         /// A list of Teachers
         /// </returns>
         [HttpGet]
-        [Route("api/TeacherData/ListTeachers/{name?}")]
-        public IEnumerable<Teacher> ListTeachers(string name = null)
+        [Route("api/TeacherData/ListTeachers/{name?}/{hireDate?}/{salary?}")]
+        public IEnumerable<Teacher> ListTeachers(string name = null, string hireDate = null, string salary = null)
         {
             //Create an instance of a connection
             MySqlConnection Conn = school.AccessDatabase();
@@ -31,10 +34,42 @@ namespace Cumulative_Project.Controllers
             //Establish a new command (query) for our database
             MySqlCommand cmd = Conn.CreateCommand();
 
-            //SQL QUERY
-            cmd.CommandText = "Select * from teachers where lower(teacherfname) like lower(@key) or lower(teacherlname) like lower(@key) or lower(concat(teacherfname, ' ', teacherlname)) like lower(@key)";
+            string Query = "SELECT * FROM teachers ";
 
-            cmd.Parameters.AddWithValue("@key", "%" + name + "%");
+            if (name != null || hireDate != null || salary != null)
+            {
+                Query += "WHERE ";
+                if (name != null)
+                {
+                    Query += "(lower(teacherfname) LIKE lower(@key) " +
+                             "OR lower(teacherlname) LIKE lower(@key) " +
+                             "OR lower(concat(teacherfname, ' ', teacherlname)) LIKE lower(@key)) ";
+                }
+
+                if (hireDate != null)
+                {
+                    if (name != null)
+                    {
+                        Query += "AND ";
+                    }
+                    Query += "lower(hiredate) LIKE lower(@hiredate) ";
+                }
+
+                if (salary != null)
+                {
+                    if (name != null || hireDate != null)
+                    {
+                        Query += "AND ";
+                    }
+                    Query += "lower(salary) LIKE lower(@salary) ";
+                }
+            }
+
+            // SQL QUERY
+            cmd.CommandText = Query;
+            cmd.Parameters.AddWithValue("@key", name != null ? "%" + name + "%" : DBNull.Value);
+            cmd.Parameters.AddWithValue("@hiredate", hireDate != null ? "%" + hireDate + "%" : DBNull.Value);
+            cmd.Parameters.AddWithValue("@salary", salary != null ? "%" + salary + "%" : DBNull.Value);
             cmd.Prepare();
 
 
@@ -54,7 +89,7 @@ namespace Cumulative_Project.Controllers
                 string teacherLname = ResultSet["teacherlname"].ToString();
                 string teacherEmployeeNumber = ResultSet["employeenumber"].ToString();
                 string hiredate = ResultSet["hiredate"].ToString();
-                decimal salary = (decimal)ResultSet["salary"];
+                decimal salaryData = (decimal)ResultSet["salary"];
 
                 Teacher newTeacher = new Teacher();
                 newTeacher.teacherId = teacherId;
@@ -62,7 +97,7 @@ namespace Cumulative_Project.Controllers
                 newTeacher.teacherLname = teacherLname;
                 newTeacher.teacherEmployeeNumber = teacherEmployeeNumber;
                 newTeacher.teacherHireDate = hiredate;
-                newTeacher.salary = salary;
+                newTeacher.salary = salaryData;
 
 
                 //Add the Teacher to the List
@@ -121,6 +156,139 @@ namespace Cumulative_Project.Controllers
 
 
             return teachersLecturesList;
+        }
+
+        // <summary>
+        /// Finds a Teacher in the system given an ID
+        /// </summary>
+        /// <param name="id">The Teacher ID primary key</param>
+        /// <returns>Teacher object</returns>
+        [HttpGet]
+        public Teacher SearchTeacherById(int id)
+        {
+            Teacher newTeacher = new Teacher();
+
+            //Create an instance of a connection
+            MySqlConnection Conn = school.AccessDatabase();
+
+            //Open the connection between the web server and database
+            Conn.Open();
+
+            //Establish a new command (query) for our database
+            MySqlCommand cmd = Conn.CreateCommand();
+
+            //SQL QUERY
+            cmd.CommandText = "Select * from teachers where teacherid = " + id;
+
+            //Gather Result Set of Query into a variable
+            MySqlDataReader ResultSet = cmd.ExecuteReader();
+
+            while (ResultSet.Read())
+            {
+                //Access Column information by the DB column name as an index
+                int teacherId = (int)ResultSet["teacherid"];
+                String teacherFname = ResultSet["teacherfname"].ToString();
+                string teacherLname = ResultSet["teacherlname"].ToString();
+                string teacherEmployeeNumber = ResultSet["employeenumber"].ToString();
+                string hiredate = ResultSet["hiredate"].ToString();
+                decimal salary = Convert.ToDecimal(ResultSet["salary"]);
+
+                newTeacher.teacherId = teacherId;
+
+                newTeacher.teacherFname = teacherFname;
+                newTeacher.teacherLname = teacherLname;
+                newTeacher.teacherEmployeeNumber = teacherEmployeeNumber;
+                newTeacher.teacherHireDate = hiredate;
+                newTeacher.salary = salary;
+
+            }
+
+
+            return newTeacher;
+        }
+
+        /// <summary>
+        /// Adds an Teacher to the MySQL Database.
+        /// </summary>
+        /// <param name="NewTeacher">An object with fields that map to the columns of the teacher's table. Non-Deterministic.</param>
+        /// <example>
+        /// POST api/TeacherData/AddTeacher 
+        /// FORM DATA / POST DATA / REQUEST BODY 
+        /// {
+        ///	"TeacherFname":"Bhargav",
+        ///	"TeacherLname":"Suthar",
+        ///	"TeacherEmployeeNumber":"T703",
+        ///	"TeacherHireDate":"2024-07-03",
+        ///	"TeacherSalary": "73"
+        /// }
+        /// </example>
+        [HttpPost]
+        [EnableCors(origins: "*", methods: "*", headers: "*")]
+        public void AddTeacher([FromBody] Teacher NewTeacher)
+        {
+            // Check for missing information
+            if (string.IsNullOrEmpty(NewTeacher.teacherFname) ||
+                string.IsNullOrEmpty(NewTeacher.teacherLname) ||
+                string.IsNullOrEmpty(NewTeacher.teacherEmployeeNumber) ||
+                string.IsNullOrEmpty(NewTeacher.teacherHireDate) ||
+                NewTeacher.salary <= 0)
+            {
+                // Handle missing information
+                throw new ArgumentException("Missing information. Please provide all required fields.");
+            }
+
+            //Create an instance of a connection
+            MySqlConnection Conn = school.AccessDatabase();
+
+            Debug.WriteLine(NewTeacher.teacherFname);
+
+            //Open the connection between the web server and database
+            Conn.Open();
+
+            //Establish a new command (query) for our database
+            MySqlCommand cmd = Conn.CreateCommand();
+
+            //SQL QUERY
+            cmd.CommandText = "INSERT INTO teachers(teacherfname, teacherlname, employeenumber, hiredate, salary) VALUES (@TeacherFname,@TeacherLname,@TeacherEmployeeNumber,@TeacherHireDate,@Salary);";
+
+            cmd.Parameters.AddWithValue("@TeacherFname", NewTeacher.teacherFname);
+            cmd.Parameters.AddWithValue("@TeacherLname", NewTeacher.teacherLname);
+            cmd.Parameters.AddWithValue("@TeacherEmployeeNumber", NewTeacher.teacherEmployeeNumber);
+            cmd.Parameters.AddWithValue("@TeacherHireDate", NewTeacher.teacherHireDate);
+            cmd.Parameters.AddWithValue("@Salary", NewTeacher.salary);
+            cmd.Prepare();
+
+            cmd.ExecuteNonQuery();
+
+            Conn.Close();
+        }
+
+        /// <summary>
+        /// Deletes an Teacher from the connected MySQL Database if the ID of that teacher exists. Does NOT maintain relational integrity.
+        /// Non-Deterministic.
+        /// </summary>
+        /// <param name="id">The ID of the Teacher.</param>
+        /// <example>POST /api/TeacherData/DeleteTeacher/3</example>
+        [HttpPost]
+        public void DeleteTeacher(int id)
+        {
+            //Create an instance of a connection
+            MySqlConnection Conn = school.AccessDatabase();
+
+            //Open the connection between the web server and database
+            Conn.Open();
+
+            //Establish a new command (query) for our database
+            MySqlCommand cmd = Conn.CreateCommand();
+
+            //SQL QUERY
+            cmd.CommandText = "Delete from teachers where teacherid=@id";
+            cmd.Parameters.AddWithValue("@id", id);
+            cmd.Prepare();
+
+            cmd.ExecuteNonQuery();
+
+            Conn.Close();
         }
     }
 }

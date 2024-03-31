@@ -1,0 +1,53 @@
+﻿@model IEnumerable<Cumulative_Project.Models.Teacher>
+@{
+    ViewBag.Title = "Add New Teacher";
+}
+
+<div id="containershow">
+    <nav>
+        <a class="navlink" href="/Teacher/List">Back To Teachers</a>
+    </nav>
+    <h2>New Teacher</h2>
+    <form method="POST" action="/Teacher/Create" onsubmit="return validateForm()">
+        <div class="inputrow">
+            <label for="TeacherFname">First Name:</label>
+            <input type="text" id="TeacherFname" name="TeacherFname" required />
+        </div>
+        <div class="inputrow">
+            <label for="TeacherLname">Last Name:</label>
+            <input type="text" id="TeacherLname" name="TeacherLname" required />
+        </div>
+        <div class="inputrow">
+            <label for="TeacherHireDate">Hire Date:</label>
+            <input type="date" id="TeacherHireDate" name="TeacherHireDate" required />
+        </div>
+        <div class="inputrow">
+            <label for="TeacherEmployeeNumber">Employee Number:</label>
+            <input type="text" id="TeacherEmployeeNumber" name="TeacherEmployeeNumber" placeholder="T234" required />
+        </div>
+        <div class="inputrow">
+            <label for="TeacherSalary">Salary:</label>
+            <input type="text" id="TeacherSalary" name="TeacherSalary" placeholder="32" required />
+        </div>
+        <div class="inputrow">
+            <input type="submit" value="Create Teacher" />
+        </div>
+    </form>
+</div>
+
+<script>
+    function validateForm() {
+        var fname = document.getElementById("TeacherFname").value;
+        var lname = document.getElementById("TeacherLname").value;
+        var hireDate = document.getElementById("TeacherHireDate").value;
+        var employeeNumber = document.getElementById("TeacherEmployeeNumber").value;
+        var salary = document.getElementById("TeacherSalary").value;
+
+        if (fname === "" || lname === "" || hireDate === "" || employeeNumber === "" || salary === "") {
+            alert("Please fill out all required fields.");
+            return false;
+        }
+
+        return true;
+    }
+</script>
