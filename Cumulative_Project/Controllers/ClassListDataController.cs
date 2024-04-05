@@ -31,8 +31,8 @@ namespace Cumulative_Project.Controllers
             //Establish a new command (query) for our database
             MySqlCommand cmd = Conn.CreateCommand();
 
-            //SQL QUERY
-            cmd.CommandText = "Select * from classes";
+            //Only courses in the classes table which is no longer pointing to a teacher who no longer exists
+            cmd.CommandText = "SELECT * FROM classes WHERE teacherid IN (SELECT teacherid FROM teachers);\n";
 
 
             //Gather Result Set of Query into a variable

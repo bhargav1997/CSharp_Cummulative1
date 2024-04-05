@@ -25,9 +25,8 @@ namespace Cumulative_Project.Controllers
         {
             //Identify that this method is running
             //Identify the inputs provided from the form
-
             Debug.WriteLine("I have accessed the Create Method!");
-            Debug.WriteLine(TeacherFname);
+            Debug.WriteLine("Fanme::" + TeacherFname);
             Debug.WriteLine(TeacherLname);
             Debug.WriteLine(TeacherHireDate);
 

@@ -8,7 +8,7 @@
         <a class="navlink" href="/Teacher/List">Back To Teachers</a>
     </nav>
     <h2>New Teacher</h2>
-    <form method="POST" action="/Teacher/Create" onsubmit="return validateForm()">
+    <form method="POST" action="/Teacher/Create"  id="teacherForm" onsubmit="submitForm(event)">
         <div class="inputrow">
             <label for="TeacherFname">First Name:</label>
             <input type="text" id="TeacherFname" name="TeacherFname" required />
@@ -36,18 +36,44 @@
 </div>
 
 <script>
-    function validateForm() {
+    function submitForm(event) {
+        event.preventDefault();
+
+        var form = document.getElementById("teacherForm");
+        var formData = new FormData(form);
+
         var fname = document.getElementById("TeacherFname").value;
         var lname = document.getElementById("TeacherLname").value;
         var hireDate = document.getElementById("TeacherHireDate").value;
         var employeeNumber = document.getElementById("TeacherEmployeeNumber").value;
         var salary = document.getElementById("TeacherSalary").value;
 
+        console.log('hireDate', hireDate);
+
         if (fname === "" || lname === "" || hireDate === "" || employeeNumber === "" || salary === "") {
             alert("Please fill out all required fields.");
             return false;
         }
 
-        return true;
+        var xhr = new XMLHttpRequest();
+        var url = "http://localhost:5069/Teacher/Create";
+
+        xhr.open("POST", url, true);
+
+        xhr.setRequestHeader("Content-Type", "application/x-www-form-urlencoded");
+
+        xhr.onreadystatechange = function () {
+            if (xhr.readyState === XMLHttpRequest.DONE) {
+                if (xhr.status === 200) {
+                    console.log("Teacher added successfully.");
+                    // Handle success response
+                } else {
+                    console.error("Failed to add teacher. Error: " + xhr.status);
+                    // Handle error response
+                }
+            }
+        };
+
+        xhr.send(new URLSearchParams(formData).toString());
     }
 </script>
