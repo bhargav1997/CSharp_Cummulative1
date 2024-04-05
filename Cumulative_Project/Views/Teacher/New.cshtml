@@ -66,10 +66,10 @@
             if (xhr.readyState === XMLHttpRequest.DONE) {
                 if (xhr.status === 200) {
                     console.log("Teacher added successfully.");
-                    // Handle success response
+                    form.reset();
                 } else {
                     console.error("Failed to add teacher. Error: " + xhr.status);
-                    // Handle error response
+                    alert("Failed to add teacher. Error: " + xhr.status);
                 }
             }
         };

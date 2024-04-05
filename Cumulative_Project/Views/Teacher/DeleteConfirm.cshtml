@@ -11,8 +11,9 @@
     </nav>
     <h2>Are you sure you want to delete @Model.teacherFname @Model.teacherLname?</h2>
     <p>This action cannot be undone.</p>
-    <input type="hidden" value="@Model.teacherId" id="teacherId"/>
-    <form method="POST" id="deleteForm"  onsubmit="deleteTeacher(event)">
+   
+    <form method="POST" id="deleteForm" onsubmit="deleteTeacher(event)">
+        <input type="hidden" value="@Model.teacherId" id="teacherId" />
         <button class="delbutton" type="submit">
             Confirm Delete
         </button>
@@ -30,17 +31,17 @@
         var url = "http://localhost:5069/Teacher/Delete/" + teacherId.value;
 
         xhr.open("DELETE", url, true);
+
         xhr.setRequestHeader("Content-Type", "application/json");
 
         xhr.onreadystatechange = function () {
             if (xhr.readyState === XMLHttpRequest.DONE) {
                 if (xhr.status === 200) {
-                    console.log("Teacher deleted successfully.");
-                    // Handle success response
+                    alert("Teacher deleted successfully.");
                 } else {
-                    console.error("Failed to delete teacher. Error: " + xhr.status);
-                    // Handle error response
+                    alert("Failed to add teacher. Error: " + xhr.status);
                 }
+                window.location = '/Teacher/List';
             }
         };
 
