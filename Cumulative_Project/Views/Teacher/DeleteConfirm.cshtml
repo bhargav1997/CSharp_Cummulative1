@@ -30,7 +30,7 @@
         var xhr = new XMLHttpRequest();
         var url = "http://localhost:5069/Teacher/Delete/" + teacherId.value;
 
-        xhr.open("DELETE", url, true);
+        xhr.open("POST", url, true);
 
         xhr.setRequestHeader("Content-Type", "application/json");
 
@@ -39,9 +39,9 @@
                 if (xhr.status === 200) {
                     alert("Teacher deleted successfully.");
                 } else {
-                    alert("Failed to add teacher. Error: " + xhr.status);
+                    alert("Failed to Delete teacher. Error: " + xhr.status);
                 }
-                window.location = '/Teacher/List';
+                navigation.navigate('/Teacher/List');
             }
         };
 
