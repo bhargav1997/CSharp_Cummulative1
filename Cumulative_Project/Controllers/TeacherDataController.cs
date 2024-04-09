@@ -131,7 +131,8 @@ namespace Cumulative_Project.Controllers
             MySqlCommand cmd = Conn.CreateCommand();
 
             //SQL QUERY
-            cmd.CommandText = "Select t.teacherid, t.teacherfname, t.hiredate, t.teacherlname, t.employeenumber, t.salary, cls.classcode, cls.startdate,  cls.finishdate, cls.classname from teachers AS t JOIN classes AS cls ON t.teacherid = cls.teacherid WHERE t.teacherid = " + id;
+            cmd.CommandText = "Select t.teacherid, t.teacherfname, t.hiredate, t.teacherlname, t.employeenumber, t.salary, cls.classcode, cls.startdate,  cls.finishdate, cls.classname from teachers AS t " +
+                "LEFT JOIN classes AS cls ON t.teacherid = cls.teacherid WHERE t.teacherid = " + id;
 
             //Gather Result Set of Query into a variable
             MySqlDataReader ResultSet = cmd.ExecuteReader();

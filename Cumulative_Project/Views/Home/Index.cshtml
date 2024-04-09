@@ -2,10 +2,21 @@
     ViewData["Title"] = "Home";
 }
 
-<div class="text-center">
-    <h1 class="display-4">Welcome to School Database!</h1>
-    <p><a href="/Teacher/List">Teachers List</a></p>
-    <p><a href="/School/StudentList">Students List</a></p>
-    <p><a href="/School/ClassesList">Classess List</a></p>
+<div class="container">
+    <div class="hero-section">
+        <h1 class="display-4">Welcome to School Database!</h1>
+        <div class="btn-container mt-5">
+            <div class="row">
+                <div class="col-md-4">
+                    <a href="/Teacher/List" class="btn btn-primary btn-lg btn-block">Teachers List</a>
+                </div>
+                <div class="col-md-4">
+                    <a href="/School/StudentList" class="btn btn-success btn-lg btn-block">Students List</a>
+                </div>
+                <div class="col-md-4">
+                    <a href="/School/ClassesList" class="btn btn-info btn-lg btn-block">Classes List</a>
+                </div>
+            </div>
+        </div>
+    </div>
 </div>
-

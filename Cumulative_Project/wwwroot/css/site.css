@@ -13,13 +13,14 @@ table {
     width: 100%;
     border-collapse: collapse;
     border: 1px solid #ddd;
+    text-align: center;
 }
 
 /* Table Header */
 th {
     background-color: #f2f2f2;
     padding: 8px;
-    text-align: left;
+    text-align: center;
 }
 
 /* Table Row */
@@ -62,10 +63,10 @@ a {
     transition: color 0.3s ease; /* Smooth color transition */
 }
 
-/* Hover effect for anchor tag */
-a:hover {
-    color: #0056b3; /* Darker blue on hover */
-}
+    /* Hover effect for anchor tag */
+    a:hover {
+        color: #0056b3; /* Darker blue on hover */
+    }
 
 /* Form Container */
 #teacherSearchForm {
@@ -75,24 +76,24 @@ a:hover {
     border-radius: 5px;
 }
 
-/* Form Label */
-#teacherSearchForm label {
-    display: inline-block;
-    width: 100px; /* Adjust width as needed */
-    text-align: right;
-    margin-right: 10px;
-}
+    /* Form Label */
+    #teacherSearchForm label {
+        display: inline-block;
+        width: 100px; /* Adjust width as needed */
+        text-align: right;
+        margin-right: 10px;
+    }
 
-/* Form Input */
-#teacherSearchForm input[type="text"],
-#teacherSearchForm input[type="date"],
-#teacherSearchForm input[type="number"] {
-    width: 200px; /* Adjust width as needed */
-    padding: 8px;
-    margin-bottom: 10px;
-    border: 1px solid #ccc;
-    border-radius: 4px;
-}
+    /* Form Input */
+    #teacherSearchForm input[type="text"],
+    #teacherSearchForm input[type="date"],
+    #teacherSearchForm input[type="number"] {
+        width: 200px; /* Adjust width as needed */
+        padding: 8px;
+        margin-bottom: 10px;
+        border: 1px solid #ccc;
+        border-radius: 4px;
+    }
 
 #searchkey {
     width: 20%; /* Subtract padding */
@@ -124,10 +125,10 @@ a:hover {
     transition: background-color 0.3s ease;
 }
 
-/* Hover Effect for Search Button */
-#teacherSearchForm button[type="submit"]:hover {
-    background-color: #0056b3; /* Darker blue color on hover */
-}
+    /* Hover Effect for Search Button */
+    #teacherSearchForm button[type="submit"]:hover {
+        background-color: #0056b3; /* Darker blue color on hover */
+    }
 
 .button {
     display: inline-block;
@@ -144,15 +145,46 @@ a:hover {
     margin: 1rem 0;
 }
 
-.button:hover {
-    color: white;
-    background-color: #45a049; /* Darker Green */
-}
+    .button:hover {
+        color: white;
+        background-color: #45a049; /* Darker Green */
+    }
 
 #containershow {
-    width: 50%;
+    width: 85%;
     margin: 0 auto;
 }
+
+#deleteConfirmContainer {
+    max-width: 600px;
+    margin: auto;
+    padding: 20px;
+    background-color: #fff;
+    border-radius: 8px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.del-navlink {
+    text-decoration: none;
+    color: #007bff; /* Bootstrap primary color */
+    font-weight: bold;
+}
+
+.delbutton {
+    margin-top: 20px;
+    width: 100%;
+    padding: 12px;
+    font-size: 16px;
+    color: #fff;
+    background-color: #dc3545; /* Bootstrap danger color */
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+}
+
+    .delbutton:hover {
+        background-color: #c82333; /* Darker shade on hover */
+    }
 
 nav {
     margin-bottom: 20px;
@@ -204,9 +236,9 @@ input[type="submit"] {
     transition: background-color 0.3s ease;
 }
 
-input[type="submit"]:hover {
-    background-color: #45a049;
-}
+    input[type="submit"]:hover {
+        background-color: #45a049;
+    }
 
 @media (min-width: 768px) {
     html {

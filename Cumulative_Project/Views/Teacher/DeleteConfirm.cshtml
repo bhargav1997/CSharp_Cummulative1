@@ -5,13 +5,13 @@
 }
 
 
-<div id="containershow">
+<div id="deleteConfirmContainer">
     <nav>
-        <a class="navlink" href="/Teacher/Show/@Model.teacherId">Cancel</a>
+        <a class="del-navlink" href="/Teacher/Show/@Model.teacherId">Cancel</a>
     </nav>
-    <h2>Are you sure you want to delete @Model.teacherFname @Model.teacherLname?</h2>
+    <h2 class="mt-4 mb-3">Are you sure you want to delete @Model.teacherFname @Model.teacherLname?</h2>
     <p>This action cannot be undone.</p>
-   
+
     <form method="POST" id="deleteForm" onsubmit="deleteTeacher(event)">
         <input type="hidden" value="@Model.teacherId" id="teacherId" />
         <button class="delbutton" type="submit">
@@ -20,8 +20,7 @@
     </form>
 </div>
 
-<script>
-    function deleteTeacher(event) {
+<script>function deleteTeacher(event) {
         event.preventDefault(); // Prevent default form submission
 
         var form = document.getElementById("deleteForm");
@@ -46,6 +45,4 @@
         };
 
         xhr.send();
-    }
-
-</script>
+    }</script>

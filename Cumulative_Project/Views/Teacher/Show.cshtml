@@ -20,26 +20,23 @@
                     <th>Hire Date</th>
                     <th>Start Date</th>
                     <th>Finish Date</th>
-                    <th>Delete?</th>
                 </tr>
             </thead>
             <tbody>
                 @foreach (var teacher in Model)
-                {
+                    {
                     <tr>
-                        <td>@teacher.teacherFname @teacher.teacherLname</td>
-                        <td>@teacher.teacherId</td>
-                        <td>@teacher.teacherEmployeeNumber</td>
-                        <td>@teacher.salary</td>
-                        <td>@teacher.classname</td>
-                        <td>@teacher.classcode</td>
-                        <td>@teacher.hiredate</td>
-                        <td>@teacher.startdate</td>
-                        <td>@teacher.finishdate</td>
-                        <td><a href="/Teacher/DeleteConfirm/@teacher.teacherId">Delete</a></td>
+                        <td>@(string.IsNullOrWhiteSpace(teacher.teacherFname) ? "-" : $"{teacher.teacherFname} {teacher.teacherLname}")</td>
+                        <td>@(teacher.teacherId)</td>
+                        <td>@(string.IsNullOrWhiteSpace(teacher.teacherEmployeeNumber) ? "-" : teacher.teacherEmployeeNumber)</td>
+                        <td>@(teacher.salary > 0 ? teacher.salary.ToString() : "-")</td>
+                        <td>@(string.IsNullOrWhiteSpace(teacher.classname) ? "-" : teacher.classname)</td>
+                        <td>@(string.IsNullOrWhiteSpace(teacher.classcode) ? "-" : teacher.classcode)</td>
+                        <td>@(string.IsNullOrWhiteSpace(teacher.hiredate) ? "-" : teacher.hiredate)</td>
+                        <td>@(string.IsNullOrWhiteSpace(teacher.startdate) ? "-" : teacher.startdate)</td>
+                        <td>@(string.IsNullOrWhiteSpace(teacher.finishdate) ? "-" : teacher.finishdate)</td>
                     </tr>
                 }
             </tbody>
         </table>
 </div>
-
