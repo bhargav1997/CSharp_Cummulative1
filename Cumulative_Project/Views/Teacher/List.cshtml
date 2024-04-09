@@ -7,18 +7,17 @@
 <a class="navlink" href="/">Back To School</a>
 
 <div id="containerlist">
-    <!--Just For THe Showcase, It's not implemented yet.'-->
     <form action="/Teacher/List" method="GET" id="teacherSearchForm">
-        <label for="name">Search by Name:</label>
+        <label for="teacherName">Search by Name:</label>
         <input type="text" id="teacherName" name="name" placeholder="Enter teacher's name">
 
         <label for="hireDate">Hire Date:</label>
-        <input type="date" id="hireDate" name="hireDate">
+        <input type="date" id="hireDateInput" name="hireDate">
 
         <label for="salary">Salary:</label>
-        <input type="number" id="salary" name="salary" placeholder="Enter salary">
+        <input type="number" id="salaryInput" name="salary" placeholder="Enter salary">
 
-        <button type="submit">Search</button>
+        <button type="button" onclick="submitForm()">Search</button>
     </form>
 
     <h2>List of Teachers</h2>
@@ -51,3 +50,40 @@
         </tbody>
     </table>
 </div>
+
+<script>
+    function submitForm() {
+        // Get form input values
+        var name = document.getElementById("teacherName").value.trim();
+        var hireDate = document.getElementById("hireDateInput").value.trim();
+        var salary = document.getElementById("salaryInput").value.trim();
+
+        // Initialize an array to store query parameters
+        var queryParams = [];
+
+        // Check if name parameter is provided
+        if (name !== "") {
+            queryParams.push("name=" + encodeURIComponent(name));
+        }
+
+        // Check if hireDate parameter is provided
+        if (hireDate !== "") {
+            queryParams.push("hireDate=" + encodeURIComponent(hireDate));
+        }
+
+        // Check if salary parameter is provided
+        if (salary !== "") {
+            queryParams.push("salary=" + encodeURIComponent(salary));
+        }
+
+        // Construct the URL with query parameters
+        var url = "/Teacher/List";
+        if (queryParams.length > 0) {
+            url += "?" + queryParams.join("&");
+        }
+
+        // Redirect to the constructed URL
+        window.location.href = url;
+    }
+
+</script>
