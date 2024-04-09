@@ -8,7 +8,7 @@
         <a class="navlink" href="/Teacher/List">Back To Teachers</a>
     </nav>
     <h2>New Teacher</h2>
-    <form method="POST" action="/Teacher/Create"  id="teacherForm" onsubmit="submitForm(event)">
+    <form method="POST" id="teacherForm" onsubmit="submitForm(event)">
         <div class="inputrow">
             <label for="TeacherFname">First Name:</label>
             <input type="text" id="TeacherFname" name="TeacherFname" required />
@@ -65,8 +65,9 @@
         xhr.onreadystatechange = function () {
             if (xhr.readyState === XMLHttpRequest.DONE) {
                 if (xhr.status === 200) {
-                    console.log("Teacher added successfully.");
+                    alert("Teacher added successfully.");
                     form.reset();
+                    navigation.navigate('/Teacher/List');
                 } else {
                     console.error("Failed to add teacher. Error: " + xhr.status);
                     alert("Failed to add teacher. Error: " + xhr.status);

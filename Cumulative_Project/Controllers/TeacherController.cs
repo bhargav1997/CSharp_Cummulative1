@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Diagnostics;
+using System.Web.Http.Cors;
 using Cumulative_Project.Models;
 using Microsoft.AspNetCore.Mvc;
 

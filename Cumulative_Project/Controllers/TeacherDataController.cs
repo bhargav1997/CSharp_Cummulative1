@@ -226,6 +226,7 @@ namespace Cumulative_Project.Controllers
         [EnableCors(origins: "*", methods: "*", headers: "*")]
         public void AddTeacher([FromBody] Teacher NewTeacher)
         {
+            Debug.WriteLine(NewTeacher.teacherFname);
             // Check for missing information
             if (string.IsNullOrEmpty(NewTeacher.teacherFname) ||
                 string.IsNullOrEmpty(NewTeacher.teacherLname) ||
