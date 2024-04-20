@@ -1,5 +1,11 @@
 # CSharp_Cummulative2
 
+# Future Features:
+
+Attendance Tracking: Ability to mark and track student attendance for each class or session.
+
+[WireFrame link](https://www.figma.com/file/f2Flb9tWcAWNEw5yV1KQUU/Cumulative-Project?type=design&node-id=0%3A1&mode=design&t=VilEuVbhfZIKjy0H-1)
+
 # Home Page
 ![Home Page](./Dashboard.png)
 
