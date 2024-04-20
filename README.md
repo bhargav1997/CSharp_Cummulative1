@@ -4,6 +4,8 @@
 
 Attendance Tracking: Ability to mark and track student attendance for each class or session.
 
+![Future Tasks Page](./future.png)
+
 [WireFrame link](https://www.figma.com/file/f2Flb9tWcAWNEw5yV1KQUU/Cumulative-Project?type=design&node-id=0%3A1&mode=design&t=VilEuVbhfZIKjy0H-1)
 
 # Home Page
@@ -12,7 +14,7 @@ Attendance Tracking: Ability to mark and track student attendance for each class
 # List Teacher Page
 ![List Teacher Page](./ListTeacher.png)
 
-When the user, clicks on teacher's id, it will navigate to the Teachers More info. Page, in which, teacher have which subjects all listed there.
+When the user, clicks on teacher's id, it will navigate to the Teachers More info. Page, in which, the teacher has which subjects all listed there.
 
 # New Teacher Creating Page
 ![New Teacher Page](./New.png)
