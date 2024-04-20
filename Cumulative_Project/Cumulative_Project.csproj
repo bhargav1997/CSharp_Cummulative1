@@ -11,11 +11,13 @@
     <None Remove="Views\Teacher\" />
     <None Remove="Content\" />
     <None Remove="Views\School\" />
+    <None Remove="Views\Class\" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Views\Teacher\" />
     <Folder Include="Content\" />
     <Folder Include="Views\School\" />
+    <Folder Include="Views\Class\" />
   </ItemGroup>
   <ItemGroup>
     <PackageReference Include="MySql.Data" Version="8.3.0" />

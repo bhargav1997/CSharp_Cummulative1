@@ -117,7 +117,6 @@ namespace Cumulative_Project.Controllers
 
             }
 
-
             return newStudent;
         }
     }

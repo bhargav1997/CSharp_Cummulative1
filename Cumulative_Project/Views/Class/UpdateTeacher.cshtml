@@ -1,0 +1,68 @@
+﻿@model IEnumerable<Cumulative_Project.Models.Class>
+@{
+    ViewBag.Title = "Class";
+    var teacherId = ViewBag.TeacherId; 
+    var teacherName = ViewBag.TeacherName;
+}
+
+<a class="navlink" href="/">Back To School</a>
+
+<div id="containerlist">
+    <h2>List of Classes</h2>
+    <div class="container mb-3">
+        <div class="row">
+            <div class="col-md-6">
+                <div class="card">
+                    <div class="card-body">
+                        <h5 class="card-title font-weight-bold">Teacher ID:</h5>
+                        <p class="card-text">@teacherId</p>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-6">
+                <div class="card">
+                    <div class="card-body">
+                        <h5 class="card-title font-weight-bold">Teacher Name:</h5>
+                        <p class="card-text">@teacherName</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+    <table class="table table-striped">
+        <thead>
+            <tr>
+                <th>Class Id</th>
+                <th>Class Name</th>
+                <th>Class Code</th>
+                <th>Start Date</th>
+                <th>Finish Date</th>
+                <th>Teacher Id</th>
+                <th>Assign New Teacher</th> <!-- New column for assigning new teacher -->
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var classData in Model)
+            {
+                <tr>
+                    <td>@classData.classid</td>
+                    <td>@classData.classname</td>
+                    <td>@classData.classcode</td>
+                    <td>@classData.startdate</td>
+                    <td>@classData.finishdate</td>
+                    <td>@classData.teacherid</td>
+                    <td>
+                        <!-- Form for assigning new teacher -->
+                        <form method="post" action="/Class/Edit">
+                            <input type="hidden" name="classId" value="@classData.classid" />
+                            <input type="hidden" name="teacherId" value="@teacherId" /> <!-- Use teacherId provided -->
+                            <button type="submit" class="btn btn-primary">Assign Teacher</button> <!-- Use assign button -->
+                        </form>
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+</div>

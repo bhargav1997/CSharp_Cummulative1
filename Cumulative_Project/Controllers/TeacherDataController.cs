@@ -189,7 +189,7 @@ namespace Cumulative_Project.Controllers
             {
                 //Access Column information by the DB column name as an index
                 int teacherId = (int)ResultSet["teacherid"];
-                String teacherFname = ResultSet["teacherfname"].ToString();
+                string teacherFname = ResultSet["teacherfname"].ToString();
                 string teacherLname = ResultSet["teacherlname"].ToString();
                 string teacherEmployeeNumber = ResultSet["employeenumber"].ToString();
                 string hiredate = ResultSet["hiredate"].ToString();

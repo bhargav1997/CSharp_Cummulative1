@@ -1,11 +1,15 @@
-﻿using System;
+﻿using System.Diagnostics;
+using System.Web.Http;
 using Cumulative_Project.Models;
-using Microsoft.AspNetCore.Mvc;
 using MySql.Data.MySqlClient;
+using System.Web.Http.Cors;
+using static Mysqlx.Expect.Open.Types.Condition.Types;
+using System.Reflection.Metadata;
+using System.Net;
 
 namespace Cumulative_Project.Controllers
 {
-	public class ClassListDataController : Controller
+	public class ClassListDataController : ApiController
     {
         // The database context class which allows us to access our MySQL Database.
         private SchoolDbContext school = new SchoolDbContext();
@@ -117,6 +121,65 @@ namespace Cumulative_Project.Controllers
             }
             return classData;
         }
+
+        /// <summary>
+        /// Updates the teacher assigned to a specific class in the MySQL Database. 
+        /// </summary>
+        /// <param name="teacherId">The ID of the teacher to assign to the class.</param>
+        /// <param name="classId">The ID of the class to update.</param>
+        /// <remarks>
+        /// If both teacherId and classId are provided, the function updates the class with the specified teacher. 
+        /// If either teacherId or classId is not provided, the function returns an error.
+        /// </remarks>
+        /// <example>
+        /// POST api/TeacherData/UpdateClassTeacher
+        /// FORM DATA / POST DATA / REQUEST BODY 
+        /// {
+        ///	"teacherId":1,
+        ///	"classId":2,
+        /// }
+        /// </example>
+        [HttpPost]
+        [EnableCors(origins: "*", methods: "*", headers: "*")]
+        public void UpdateClassTeacher(int teacherId, int classId)
+        {
+            try
+            {
+                // Check if both teacherId and classId are provided
+                if (teacherId == 0 || classId == 0)
+                {
+                    throw new ArgumentException("Both teacherId and classId are required.");
+                }
+
+                // Create an instance of a connection
+                MySqlConnection Conn = school.AccessDatabase();
+
+                // Open the connection between the web server and database
+                Conn.Open();
+
+                // Establish a new command (query) for our database
+                MySqlCommand cmd = Conn.CreateCommand();
+
+                // SQL QUERY
+                cmd.CommandText = "UPDATE classes SET teacherid=@TeacherId WHERE classid=@ClassId;";
+                cmd.Parameters.AddWithValue("@TeacherId", teacherId);
+                cmd.Parameters.AddWithValue("@ClassId", classId);
+
+                cmd.Prepare();
+
+                cmd.ExecuteNonQuery();
+
+                Conn.Close();
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine("Error: " + ex.Message);
+
+                // internal server error
+                throw new ArgumentException(ex.Message);
+            }
+        }
+
     }
 }
 
