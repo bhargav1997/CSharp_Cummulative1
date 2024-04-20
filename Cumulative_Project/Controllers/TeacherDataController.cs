@@ -5,6 +5,9 @@ using MySql.Data.MySqlClient;
 using System.Web.Http.Cors;
 using static Mysqlx.Expect.Open.Types.Condition.Types;
 using System.Reflection.Metadata;
+using System.Net;
+using Microsoft.Extensions.Hosting;
+using System.Security.Policy;
 
 namespace Cumulative_Project.Controllers
 {
@@ -22,7 +25,7 @@ namespace Cumulative_Project.Controllers
         /// A list of Teachers
         /// </returns>
         [HttpGet]
-        [Route("api/TeacherData/ListTeachers/{name?}/{hireDate?}/{salary?}")]
+        [Route("/TeacherData/ListTeachers/{name?}/{hireDate?}/{salary?}")]
         public IEnumerable<Teacher> ListTeachers(string name = null, string hireDate = null, string salary = null)
         {
             //Create an instance of a connection
@@ -107,7 +110,7 @@ namespace Cumulative_Project.Controllers
             //Close the connection between the MySQL Database and the WebServer
             Conn.Close();
 
-            //Return the final list of author names
+            //Return the final list of Teacher names
             return teachers;
         }
 
@@ -292,6 +295,81 @@ namespace Cumulative_Project.Controllers
 
             Conn.Close();
         }
+
+
+        /// <summary>
+        /// Updates an Teacher on the MySQL Database. 
+        /// </summary>
+        /// <param name="TeacherInfo">An object with fields that map to the columns of the Teacher's table.</param>
+        /// <example>
+        /// POST api/TeacherData/UpdateTeacherData/208 
+        /// FORM DATA / POST DATA / REQUEST BODY 
+        /// {
+        ///	"TeacherFname":"Bhargav",
+        ///	"TeacherLname":"Suthar",
+        ///	"TeacherEmployeeNumber":"T703",
+        ///	"TeacherHireDate":"2024-07-03",
+        ///	"TeacherSalary": "73"
+        /// }
+        /// </example>
+       
+        [HttpPost]
+        [Route("/TeacherData/UpdateTeacherData")]
+        [EnableCors(origins: "*", methods: "*", headers: "*")]
+        public void UpdateTeacherData(int id, [FromBody] Teacher teacher)
+        {
+            // Check if essential information is missing
+            if (string.IsNullOrEmpty(teacher.teacherFname) ||
+                string.IsNullOrEmpty(teacher.teacherLname) ||
+                string.IsNullOrEmpty(teacher.teacherEmployeeNumber) ||
+                string.IsNullOrEmpty(teacher.teacherHireDate) ||
+                teacher.salary <= 0)
+            {
+                // Return an appropriate response indicating missing information
+                int StatusCode = (int)HttpStatusCode.BadRequest;
+
+                // Log the exception
+                Console.WriteLine("Error: " + StatusCode);
+                // Handle missing information
+                throw new ArgumentException("Missing information. Please provide all required fields.");
+            }
+
+            try
+            {
+                //Create an instance of a connection
+                MySqlConnection Conn = school.AccessDatabase();
+
+                //Open the connection between the web server and database
+                Conn.Open();
+
+                //Establish a new command (query) for our database
+                MySqlCommand cmd = Conn.CreateCommand();
+
+                //SQL QUERY
+                cmd.CommandText = "UPDATE teachers SET teacherfname=@TeacherFname, teacherlname=@TeacherLname, employeenumber=@TeacherEmployeeNumber, hiredate=@TeacherHireDate, salary=@Salary WHERE teacherid=@TeacherId";
+                cmd.Parameters.AddWithValue("@TeacherFname", teacher.teacherFname);
+                cmd.Parameters.AddWithValue("@TeacherLname", teacher.teacherLname);
+                cmd.Parameters.AddWithValue("@TeacherEmployeeNumber", teacher.teacherEmployeeNumber);
+                cmd.Parameters.AddWithValue("@TeacherHireDate", teacher.teacherHireDate);
+                cmd.Parameters.AddWithValue("@Salary", teacher.salary);
+                cmd.Parameters.AddWithValue("@TeacherId", id);
+                cmd.Prepare();
+
+                cmd.ExecuteNonQuery();
+
+                Conn.Close();
+            }
+            catch (Exception ex)
+            {
+                // Handle any exceptions, log them, or return an appropriate response
+                int StatusCode = (int)HttpStatusCode.InternalServerError;
+                // Log the exception
+                Console.WriteLine("Error: " + ex.Message);
+                Console.WriteLine("Status Code:" + StatusCode);
+            }
+        }
+
     }
 }
+
 

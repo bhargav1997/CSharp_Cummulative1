@@ -1,0 +1,129 @@
+﻿@model Cumulative_Project.Models.Teacher;
+
+@{
+    ViewBag.Title = "Update Teacher";
+    string inputDate = Model.teacherHireDate.ToString(); // Assuming Model.teacherHireDate is a string
+    DateTime dateTime10 = Convert.ToDateTime(inputDate); // 1/1/0001 12:00:00 AM
+
+    string formattedDate = dateTime10.ToString("yyyy-MM-dd");
+}
+
+<div id="containershow">
+    <nav>
+        <a class="navlink" href="/Teacher/List">Back To Teachers</a>
+    </nav>
+    <h2>Update Teacher</h2>
+    <form method="POST" id="updateTeacher" onsubmit="updateTeacherForm(event)">
+        <div class="inputrow">
+            <label id="TeacherFnameLabel" for="TeacherFname">First Name *:</label>
+            <input type="text" id="TeacherFname" name="TeacherFname" required value="@Model.teacherFname" />
+        </div>
+        <div class="inputrow">
+            <label id="TeacherLnameLabel" for="TeacherLname">Last Name *:</label>
+            <input type="text" id="TeacherLname" name="TeacherLname" required value="@Model.teacherLname" />
+        </div>
+        <div class="inputrow">
+            <label id="TeacherHireDateLabel" for="TeacherHireDate">Hire Date *:</label>
+            <input type="date" id="TeacherHireDate" name="TeacherHireDate" required value="@formattedDate" />
+        </div>
+        <div class="inputrow">
+            <label id="TeacherEmployeeNumberLabel" for="TeacherEmployeeNumber">Employee Number *:</label>
+            <input type="text" id="TeacherEmployeeNumber" name="TeacherEmployeeNumber" placeholder="T234" required value="@Model.teacherEmployeeNumber" />
+        </div>
+        <div class="inputrow">
+            <label id="TeacherSalaryLabel" for="TeacherSalary">Salary *:</label>
+            <input type="text" id="TeacherSalary" name="TeacherSalary" placeholder="32" required value="@Model.salary" />
+        </div>
+        <input type="hidden" id="teacherId" value="@Model.teacherId" />
+        <div class="inputrow">
+            <input type="submit" value="Update Teacher" />
+        </div>
+    </form>
+</div>
+
+<script>function updateTeacherForm(event) {
+        event.preventDefault();
+
+        var form = document.getElementById("updateTeacher");
+        var formData = new FormData(form);
+
+        var teacherId = document.getElementById("teacherId").value;
+        var fname = document.getElementById("TeacherFname").value;
+        var lname = document.getElementById("TeacherLname").value;
+        var hireDate = document.getElementById("TeacherHireDate").value;
+        var employeeNumber = document.getElementById("TeacherEmployeeNumber").value;
+        var salary = document.getElementById("TeacherSalary").value;
+
+        var fnameLabel = document.getElementById("TeacherFnameLabel");
+        var lnameLabel = document.getElementById("TeacherLnameLabel");
+        var hireDateLabel = document.getElementById("TeacherHireDateLabel");
+        var employeeNumberLabel = document.getElementById("TeacherEmployeeNumberLabel");
+        var salaryLabel = document.getElementById("TeacherSalaryLabel");
+
+        if (fname === "") {
+            fnameLabel.innerText = "First Name (Required)";
+            fnameLabel.style.color = "red";
+        } else {
+            fnameLabel.innerText = "First Name:";
+            fnameLabel.style.color = "black";
+        }
+
+        if (lname === "") {
+            lnameLabel.innerText = "Last Name (Required)";
+            lnameLabel.style.color = "red";
+        } else {
+            lnameLabel.innerText = "Last Name:";
+            lnameLabel.style.color = "black";
+        }
+
+        if (hireDate === "") {
+            hireDateLabel.innerText = "Hire Date (Required)";
+            hireDateLabel.style.color = "red";
+        } else {
+            hireDateLabel.innerText = "Hire Date:";
+            hireDateLabel.style.color = "black";
+        }
+
+        if (employeeNumber === "") {
+            employeeNumberLabel.innerText = "Employee Number (Required)";
+            employeeNumberLabel.style.color = "red";
+        } else {
+            employeeNumberLabel.innerText = "Employee Number:";
+            employeeNumberLabel.style.color = "black";
+        }
+
+        if (salary === "") {
+            salaryLabel.innerText = "Salary (Required)";
+            salaryLabel.style.color = "red";
+        } else {
+            salaryLabel.innerText = "Salary:";
+            salaryLabel.style.color = "black";
+        }
+
+        if (fname === "" || lname === "" || hireDate === "" || employeeNumber === "" || salary === "") {
+            return false;
+        }
+
+        var xhr = new XMLHttpRequest();
+        var url = "http://localhost:5069/Teacher/Edit/" + teacherId;
+
+        xhr.open("POST", url, true);
+
+        xhr.setRequestHeader("Content-Type", "application/x-www-form-urlencoded");
+
+        xhr.onreadystatechange = function () {
+            if (xhr.readyState === XMLHttpRequest.DONE) {
+                if (xhr.status === 200) {
+                    alert("Teacher added successfully.");
+                    form.reset();
+                    navigation.navigate('/Teacher/Show/' + teacherId);
+                } else {
+                    console.error("Failed to add teacher. Error: " + xhr.status);
+                    alert("Failed to add teacher. Error: " + xhr.status);
+                }
+            }
+        };
+
+        xhr.send(new URLSearchParams(formData).toString());
+
+    }</script>

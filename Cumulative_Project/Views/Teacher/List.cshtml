@@ -17,7 +17,7 @@
         <label for="salary">Salary:</label>
         <input type="number" id="salaryInput" name="salary" placeholder="Enter salary">
 
-        <button type="button" onclick="submitForm()">Search</button>
+        <button type="submit" onclick="submitForm()">Search</button>
     </form>
 
     <h2>List of Teachers</h2>
@@ -44,7 +44,7 @@
                     <td>@teacher.teacherEmployeeNumber</td>
                     <td>@teacher.teacherHireDate</td>
                     <td>@teacher.salary</td>
-                    <td><a href="/Teacher/DeleteConfirm/@teacher.teacherId">Delete</a></td
+                    <td><a href="/Teacher/DeleteConfirm/@teacher.teacherId">Delete</a></td>
                 </tr>
             }
         </tbody>
@@ -68,7 +68,7 @@
 
         // Check if hireDate parameter is provided
         if (hireDate !== "") {
-            queryParams.push("hireDate=" + hireDate);
+            queryParams.push("hireDate=" + encodeURIComponent(hireDate));
         }
 
         // Check if salary parameter is provided
