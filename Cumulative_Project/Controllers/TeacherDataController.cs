@@ -6,8 +6,6 @@ using System.Web.Http.Cors;
 using static Mysqlx.Expect.Open.Types.Condition.Types;
 using System.Reflection.Metadata;
 using System.Net;
-using Microsoft.Extensions.Hosting;
-using System.Security.Policy;
 
 namespace Cumulative_Project.Controllers
 {
@@ -25,7 +23,7 @@ namespace Cumulative_Project.Controllers
         /// A list of Teachers
         /// </returns>
         [HttpGet]
-        [Route("/TeacherData/ListTeachers/{name?}/{hireDate?}/{salary?}")]
+        [Route("api/TeacherData/ListTeachers/{name?}/{hireDate?}/{salary?}")]
         public IEnumerable<Teacher> ListTeachers(string name = null, string hireDate = null, string salary = null)
         {
             //Create an instance of a connection
@@ -110,7 +108,7 @@ namespace Cumulative_Project.Controllers
             //Close the connection between the MySQL Database and the WebServer
             Conn.Close();
 
-            //Return the final list of Teacher names
+            //Return the final list of author names
             return teachers;
         }
 
@@ -296,7 +294,6 @@ namespace Cumulative_Project.Controllers
             Conn.Close();
         }
 
-
         /// <summary>
         /// Updates an Teacher on the MySQL Database. 
         /// </summary>
@@ -312,7 +309,6 @@ namespace Cumulative_Project.Controllers
         ///	"TeacherSalary": "73"
         /// }
         /// </example>
-       
         [HttpPost]
         [Route("/TeacherData/UpdateTeacherData")]
         [EnableCors(origins: "*", methods: "*", headers: "*")]
@@ -368,8 +364,6 @@ namespace Cumulative_Project.Controllers
                 Console.WriteLine("Status Code:" + StatusCode);
             }
         }
-
     }
 }
-
 

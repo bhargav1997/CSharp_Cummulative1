@@ -114,12 +114,12 @@
         xhr.onreadystatechange = function () {
             if (xhr.readyState === XMLHttpRequest.DONE) {
                 if (xhr.status === 200) {
-                    alert("Teacher added successfully.");
+                    alert("Teacher Update successfully.");
                     form.reset();
                     navigation.navigate('/Teacher/Show/' + teacherId);
                 } else {
-                    console.error("Failed to add teacher. Error: " + xhr.status);
-                    alert("Failed to add teacher. Error: " + xhr.status);
+                    console.error("Failed to Update teacher. Error: " + xhr.status);
+                    alert("Failed to Update teacher. Error: " + xhr.status);
                 }
             }
         };
